@@ -8,7 +8,37 @@
 <script type="text/javascript">
   
   var run = function() {
+    var r = new X.renderer('r');
+    // the limit for objects with picking is right now 999
+    // but we are going to create 1000 cubes - so let's deactivate picking
+    //
+    // remember, XTK is optimized for large objects rather than a lot.. maybe you can help?
+    r.config.PICKING_ENABLED = false;
+    r.init();
+    
+    // create a bunch of cubes
+    for (var y=0; y<20; y++) {
+	    for (var x=0; x<50;x++) {
+	     
+	      var c = new X.cube([x*3,y*3,0],1,1,1);
+	      c.setColor(150 % x, 150 % y, 1);
+	      r.add(c);
+	      
+	    }
+    }    
+    
+    r.render();
+    
+    // .. and animate!!
+    setInterval(function() {
       
+      // rotate the camera in X-direction (which triggers re-rendering)
+      r.camera().rotate([1,0]);
+      
+    },15);
+
+      
+
       var r1 = new X.renderer('r1');
       r1.init();
 
@@ -159,8 +189,10 @@
         <span class="try">then you should try</span>
         <h1>XTK</h1>
     </div>
-
 <div id="r1" class="step webglslide" data-x="-2000" data-y="-1500">
+ </div>
+
+<div id="r" class="step webglslide" data-x="-2000" data-y="1000">
  </div>
 
     <!--
